@@ -67,7 +67,7 @@ export const ExpertsBlock: React.FC<ExpertsBlockProps> = ({
   const expertsData = experts.length > 0 ? experts : defaultExperts
 
   return (
-    <section className="experts-section w-screen h-[750px] md:h-[850px] lg:h-[950px] bg-[#1B0E01] flex flex-col justify-center items-center relative py-[60px] md:py-[80px] lg:py-[100px] px-6 sm:px-8 md:px-12 lg:px-0 pb-[80px] md:pb-[100px] lg:pb-[120px] overflow-hidden">
+    <section className="experts-section w-screen min-h-[750px] md:min-h-[850px] lg:min-h-[950px] bg-[#1B0E01] flex flex-col justify-center items-center relative py-[60px] md:py-[80px] lg:py-[100px] px-6 sm:px-8 md:px-12 lg:px-0 pb-[80px] md:pb-[100px] lg:pb-[120px]">
       {/* Small Ellipse - Upper Left */}
       <Image
         src="/images/small-ellipse.svg"

@@ -1,0 +1,1 @@
+export { StoryTimeHeroBlock } from './Component'
