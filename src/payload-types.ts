@@ -199,6 +199,10 @@ export interface Page {
     | FormBlock
     | ServicesBlock
     | ExperienceBlock
+    | AboutHeroBlock
+    | FounderBlock
+    | ExpertsBlock
+    | AboutCTABlock
   )[];
   meta?: {
     title?: string | null;
@@ -792,6 +796,86 @@ export interface ExperienceBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AboutHeroBlock".
+ */
+export interface AboutHeroBlock {
+  title: string;
+  description: string;
+  buttonText: string;
+  buttonLink?: string | null;
+  image: number | Media;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'aboutHero';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FounderBlock".
+ */
+export interface FounderBlock {
+  sectionLabel: string;
+  sectionTitle: string;
+  sectionDescription: string;
+  founderLabel: string;
+  founderName: string;
+  founderStory: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  founderImage: number | Media;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'founder';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ExpertsBlock".
+ */
+export interface ExpertsBlock {
+  sectionLabel: string;
+  sectionTitle: string;
+  sectionDescription: string;
+  experts?:
+    | {
+        name: string;
+        title: string;
+        description: string;
+        image: number | Media;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'experts';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AboutCTABlock".
+ */
+export interface AboutCTABlock {
+  title: string;
+  heading: string;
+  description: string;
+  buttonText: string;
+  buttonLink?: string | null;
+  image: number | Media;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'aboutCTA';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -1083,6 +1167,10 @@ export interface PagesSelect<T extends boolean = true> {
         formBlock?: T | FormBlockSelect<T>;
         services?: T | ServicesBlockSelect<T>;
         experience?: T | ExperienceBlockSelect<T>;
+        aboutHero?: T | AboutHeroBlockSelect<T>;
+        founder?: T | FounderBlockSelect<T>;
+        experts?: T | ExpertsBlockSelect<T>;
+        aboutCTA?: T | AboutCTABlockSelect<T>;
       };
   meta?:
     | T
@@ -1226,6 +1314,68 @@ export interface ExperienceBlockSelect<T extends boolean = true> {
         caption?: T;
         id?: T;
       };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AboutHeroBlock_select".
+ */
+export interface AboutHeroBlockSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  buttonText?: T;
+  buttonLink?: T;
+  image?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FounderBlock_select".
+ */
+export interface FounderBlockSelect<T extends boolean = true> {
+  sectionLabel?: T;
+  sectionTitle?: T;
+  sectionDescription?: T;
+  founderLabel?: T;
+  founderName?: T;
+  founderStory?: T;
+  founderImage?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ExpertsBlock_select".
+ */
+export interface ExpertsBlockSelect<T extends boolean = true> {
+  sectionLabel?: T;
+  sectionTitle?: T;
+  sectionDescription?: T;
+  experts?:
+    | T
+    | {
+        name?: T;
+        title?: T;
+        description?: T;
+        image?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AboutCTABlock_select".
+ */
+export interface AboutCTABlockSelect<T extends boolean = true> {
+  title?: T;
+  heading?: T;
+  description?: T;
+  buttonText?: T;
+  buttonLink?: T;
+  image?: T;
   id?: T;
   blockName?: T;
 }

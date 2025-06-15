@@ -4,6 +4,7 @@ import { ChevronDown, Menu, X } from 'lucide-react'
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
+import { usePathname } from 'next/navigation'
 
 interface HeaderClientProps {
   data: any // We'll keep this for compatibility but won't use it for now
@@ -13,17 +14,32 @@ export function HeaderClient({ data }: HeaderClientProps) {
   const [isEventsOpen, setIsEventsOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const pathname = usePathname()
+
+  // Check if we're on a page that should have a static header
+  const isStaticHeaderPage = pathname === '/about'
 
   useEffect(() => {
     const handleScroll = () => {
-      // Assuming hero section is roughly 100vh, adjust this value as needed
+      // If it's a static header page, always show as scrolled (solid background)
+      if (isStaticHeaderPage) {
+        setIsScrolled(true)
+        return
+      }
+
+      // For other pages, use normal scroll behavior
       const heroHeight = window.innerHeight
       setIsScrolled(window.scrollY > heroHeight * 0.8)
     }
 
+    // Set initial state
+    if (isStaticHeaderPage) {
+      setIsScrolled(true)
+    }
+
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+  }, [isStaticHeaderPage])
 
   // Close mobile menu when window is resized to desktop
   useEffect(() => {
@@ -57,9 +73,9 @@ export function HeaderClient({ data }: HeaderClientProps) {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        className={`${isStaticHeaderPage ? 'relative' : 'fixed'} top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled
-            ? 'bg-[#F4F1EB] shadow-sm h-[105px] px-4 md:px-6 py-2 lg:py-3'
+            ? `bg-[#F4F1EB] h-[105px] px-4 md:px-6 py-2 lg:py-3 ${isStaticHeaderPage ? '' : 'shadow-sm'}`
             : 'bg-transparent px-6'
         }`}
       >
