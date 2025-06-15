@@ -1,0 +1,1 @@
+export { PortfolioEventTypesBlock } from './Component'
