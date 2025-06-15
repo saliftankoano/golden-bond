@@ -2,6 +2,28 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'TenorSans';
+  src: url('/fonts/TenorSans-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Garamond';
+  src: url('/fonts/eb-garamond.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.tenor-font {
+  font-family: 'TenorSans', sans-serif;
+}
+
+.garamond-font {
+  font-family: 'Garamond', serif;
+}
+
 @layer base {
   h1,
   h2,
