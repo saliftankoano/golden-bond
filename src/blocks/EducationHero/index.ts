@@ -1,0 +1,1 @@
+export { EducationHero } from './Component'
