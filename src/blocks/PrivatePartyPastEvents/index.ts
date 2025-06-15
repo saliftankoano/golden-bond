@@ -1,0 +1,1 @@
+export { PrivatePartyPastEvents } from './Component'
