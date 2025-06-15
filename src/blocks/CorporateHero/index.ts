@@ -1,0 +1,1 @@
+export { CorporateHero } from './Component'

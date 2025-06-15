@@ -1,0 +1,1 @@
+export { CorporateFind } from './Component'
