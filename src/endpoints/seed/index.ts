@@ -1,14 +1,20 @@
 import type { CollectionSlug, GlobalSlug, Payload, PayloadRequest, File } from 'payload'
+import * as fs from 'fs'
+import * as path from 'path'
 
 import { contactForm as contactFormData } from './contact-form'
 import { contact as contactPageData } from './contact-page'
 import { home } from './home'
+import { homeStatic } from './home-static'
 import { image1 } from './image-1'
 import { image2 } from './image-2'
 import { imageHero1 } from './image-hero-1'
 import { post1 } from './post-1'
 import { post2 } from './post-2'
 import { post3 } from './post-3'
+import { gbHero } from './gb-hero'
+import { gbPrivateEvents, gbBusinessEvents, gbPopupEvents } from './gb-services'
+import { gbExperience1, gbExperience2, gbExperience3 } from './gb-experience'
 
 const collections: CollectionSlug[] = [
   'categories',
@@ -20,6 +26,42 @@ const collections: CollectionSlug[] = [
   'search',
 ]
 const globals: GlobalSlug[] = ['header', 'footer']
+
+// Helper function to read local image files
+async function readLocalImageFile(imagePath: string): Promise<File> {
+  const fullPath = path.join(process.cwd(), 'public', imagePath)
+
+  if (!fs.existsSync(fullPath)) {
+    throw new Error(`Image file not found: ${fullPath}`)
+  }
+
+  const data = fs.readFileSync(fullPath)
+  const ext = path.extname(imagePath).toLowerCase()
+  const name = path.basename(imagePath)
+
+  let mimetype: string
+  switch (ext) {
+    case '.jpg':
+    case '.jpeg':
+      mimetype = 'image/jpeg'
+      break
+    case '.png':
+      mimetype = 'image/png'
+      break
+    case '.webp':
+      mimetype = 'image/webp'
+      break
+    default:
+      mimetype = 'image/jpeg'
+  }
+
+  return {
+    name,
+    data: Buffer.from(data),
+    mimetype,
+    size: data.length,
+  }
+}
 
 // Next.js revalidation errors are normal when seeding the database without a server running
 // i.e. running `yarn seed` locally instead of using the admin UI within an active app
@@ -78,24 +120,37 @@ export const seed = async ({
     },
   })
 
-  payload.logger.info(`— Seeding media...`)
+  payload.logger.info(`— Seeding Golden Bond media...`)
 
-  const [image1Buffer, image2Buffer, image3Buffer, hero1Buffer] = await Promise.all([
-    fetchFileByURL(
-      'https://raw.githubusercontent.com/payloadcms/payload/refs/heads/main/templates/website/src/endpoints/seed/image-post1.webp',
-    ),
-    fetchFileByURL(
-      'https://raw.githubusercontent.com/payloadcms/payload/refs/heads/main/templates/website/src/endpoints/seed/image-post2.webp',
-    ),
-    fetchFileByURL(
-      'https://raw.githubusercontent.com/payloadcms/payload/refs/heads/main/templates/website/src/endpoints/seed/image-post3.webp',
-    ),
-    fetchFileByURL(
-      'https://raw.githubusercontent.com/payloadcms/payload/refs/heads/main/templates/website/src/endpoints/seed/image-hero1.webp',
-    ),
+  // Read Golden Bond image files
+  const [
+    gbHeroBuffer,
+    gbPrivateEventsBuffer,
+    gbBusinessEventsBuffer,
+    gbPopupEventsBuffer,
+    gbExp1Buffer,
+    gbExp2Buffer,
+    gbExp3Buffer,
+  ] = await Promise.all([
+    readLocalImageFile('images/hero.jpg'),
+    readLocalImageFile('images/services/private-events.jpg'),
+    readLocalImageFile('images/services/business-events.jpg'),
+    readLocalImageFile('images/services/popup-events.jpg'),
+    readLocalImageFile('images/experience/experience1.png'),
+    readLocalImageFile('images/experience/experience2.png'),
+    readLocalImageFile('images/experience/experience3.png'),
   ])
 
-  const [demoAuthor, image1Doc, image2Doc, image3Doc, imageHomeDoc] = await Promise.all([
+  const [
+    demoAuthor,
+    gbHeroDoc,
+    gbPrivateEventsDoc,
+    gbBusinessEventsDoc,
+    gbPopupEventsDoc,
+    gbExp1Doc,
+    gbExp2Doc,
+    gbExp3Doc,
+  ] = await Promise.all([
     payload.create({
       collection: 'users',
       data: {
@@ -106,179 +161,146 @@ export const seed = async ({
     }),
     payload.create({
       collection: 'media',
-      data: image1,
-      file: image1Buffer,
+      data: gbHero,
+      file: gbHeroBuffer,
     }),
     payload.create({
       collection: 'media',
-      data: image2,
-      file: image2Buffer,
+      data: gbPrivateEvents,
+      file: gbPrivateEventsBuffer,
     }),
     payload.create({
       collection: 'media',
-      data: image2,
-      file: image3Buffer,
+      data: gbBusinessEvents,
+      file: gbBusinessEventsBuffer,
     }),
     payload.create({
       collection: 'media',
-      data: imageHero1,
-      file: hero1Buffer,
-    }),
-
-    payload.create({
-      collection: 'categories',
-      data: {
-        title: 'Technology',
-        breadcrumbs: [
-          {
-            label: 'Technology',
-            url: '/technology',
-          },
-        ],
-      },
-    }),
-
-    payload.create({
-      collection: 'categories',
-      data: {
-        title: 'News',
-        breadcrumbs: [
-          {
-            label: 'News',
-            url: '/news',
-          },
-        ],
-      },
-    }),
-
-    payload.create({
-      collection: 'categories',
-      data: {
-        title: 'Finance',
-        breadcrumbs: [
-          {
-            label: 'Finance',
-            url: '/finance',
-          },
-        ],
-      },
+      data: gbPopupEvents,
+      file: gbPopupEventsBuffer,
     }),
     payload.create({
-      collection: 'categories',
-      data: {
-        title: 'Design',
-        breadcrumbs: [
-          {
-            label: 'Design',
-            url: '/design',
-          },
-        ],
-      },
+      collection: 'media',
+      data: gbExperience1,
+      file: gbExp1Buffer,
     }),
-
     payload.create({
-      collection: 'categories',
-      data: {
-        title: 'Software',
-        breadcrumbs: [
-          {
-            label: 'Software',
-            url: '/software',
-          },
-        ],
-      },
+      collection: 'media',
+      data: gbExperience2,
+      file: gbExp2Buffer,
     }),
-
     payload.create({
-      collection: 'categories',
-      data: {
-        title: 'Engineering',
-        breadcrumbs: [
-          {
-            label: 'Engineering',
-            url: '/engineering',
-          },
-        ],
-      },
+      collection: 'media',
+      data: gbExperience3,
+      file: gbExp3Buffer,
     }),
   ])
 
-  payload.logger.info(`— Seeding posts...`)
+  payload.logger.info(`— Seeding Golden Bond pages...`)
 
-  // Do not create posts with `Promise.all` because we want the posts to be created in order
-  // This way we can sort them by `createdAt` or `publishedAt` and they will be in the expected order
-  const post1Doc = await payload.create({
-    collection: 'posts',
+  // Create the Golden Bond home page with proper media references
+  const homePageData = {
+    ...homeStatic,
+    hero: {
+      ...homeStatic.hero,
+      media: gbHeroDoc.id,
+    },
+    layout: [
+      {
+        blockType: 'services' as const,
+        subheading: 'CHOOSE YOUR EXPERIENCE',
+        heading: 'Tailored Events for Every Occasion',
+        services: [
+          {
+            category: 'Private Events',
+            title: 'Intimate Celebrations',
+            description: 'Perfect for bachelorette parties, birthdays, and special gatherings',
+            image: gbPrivateEventsDoc.id,
+            buttons: [
+              {
+                label: 'BOOK NOW',
+                style: 'primary' as const,
+                link: '/booking',
+              },
+              {
+                label: 'EXPLORE',
+                style: 'secondary' as const,
+                link: '/private-party',
+              },
+            ],
+          },
+          {
+            category: 'Business Events',
+            title: 'Professional Gatherings',
+            description: 'Ideal for corporate meetings, team building, and networking events.',
+            image: gbBusinessEventsDoc.id,
+            buttons: [
+              {
+                label: 'BOOK NOW',
+                style: 'primary' as const,
+                link: '/booking',
+              },
+              {
+                label: 'EXPLORE',
+                style: 'secondary' as const,
+                link: '/corporate',
+              },
+            ],
+          },
+          {
+            category: 'Popup Events',
+            title: 'Pop-Up Experiences',
+            description: 'Unique temporary experiences and exclusive showcases.',
+            image: gbPopupEventsDoc.id,
+            buttons: [
+              {
+                label: 'BOOK NOW',
+                style: 'primary' as const,
+                link: '/booking',
+              },
+              {
+                label: 'EXPLORE',
+                style: 'secondary' as const,
+                link: '/popup',
+              },
+            ],
+          },
+        ],
+      },
+      {
+        blockType: 'experience' as const,
+        subheading: 'What we can do for you',
+        heading: 'The Golden Bond Experience',
+        description:
+          "Golden Bond is about celebrating connections that spark meaning. We're more than jewelry - we're an extension of your bond, your story, your forever evolving story.<br /><br />Whether it's a statement, a symbol, a milestone, or a moment worth holding onto - our Bracelet Bar sparks the story.<br /><br />Golden Bond Jewelry creates custom-fit, welded permanent jewelry in 14K gold and sterling silver, as well as clasped and ready to wear jewelry.",
+        buttonText: 'Book Now',
+        buttonLink: '/booking',
+        images: [
+          {
+            image: gbExp1Doc.id,
+            caption: 'Gems & Glamour: A Jewelry Showcase',
+          },
+          {
+            image: gbExp2Doc.id,
+            caption: 'Sparkle & Shine Jewelry Showcase',
+          },
+          {
+            image: gbExp3Doc.id,
+            caption: 'Magic & Mystery: A Jewelry Showcase',
+          },
+        ],
+      },
+    ],
+  }
+
+  await payload.create({
+    collection: 'pages',
     depth: 0,
     context: {
       disableRevalidate: true,
     },
-    data: post1({ heroImage: image1Doc, blockImage: image2Doc, author: demoAuthor }),
+    data: homePageData,
   })
-
-  const post2Doc = await payload.create({
-    collection: 'posts',
-    depth: 0,
-    context: {
-      disableRevalidate: true,
-    },
-    data: post2({ heroImage: image2Doc, blockImage: image3Doc, author: demoAuthor }),
-  })
-
-  const post3Doc = await payload.create({
-    collection: 'posts',
-    depth: 0,
-    context: {
-      disableRevalidate: true,
-    },
-    data: post3({ heroImage: image3Doc, blockImage: image1Doc, author: demoAuthor }),
-  })
-
-  // update each post with related posts
-  await payload.update({
-    id: post1Doc.id,
-    collection: 'posts',
-    data: {
-      relatedPosts: [post2Doc.id, post3Doc.id],
-    },
-  })
-  await payload.update({
-    id: post2Doc.id,
-    collection: 'posts',
-    data: {
-      relatedPosts: [post1Doc.id, post3Doc.id],
-    },
-  })
-  await payload.update({
-    id: post3Doc.id,
-    collection: 'posts',
-    data: {
-      relatedPosts: [post1Doc.id, post2Doc.id],
-    },
-  })
-
-  payload.logger.info(`— Seeding contact form...`)
-
-  const contactForm = await payload.create({
-    collection: 'forms',
-    depth: 0,
-    data: contactFormData,
-  })
-
-  payload.logger.info(`— Seeding pages...`)
-
-  const [_, contactPage] = await Promise.all([
-    payload.create({
-      collection: 'pages',
-      depth: 0,
-      data: home({ heroImage: imageHomeDoc, metaImage: image2Doc }),
-    }),
-    payload.create({
-      collection: 'pages',
-      depth: 0,
-      data: contactPageData({ contactForm: contactForm }),
-    }),
-  ])
 
   payload.logger.info(`— Seeding globals...`)
 
@@ -290,18 +312,29 @@ export const seed = async ({
           {
             link: {
               type: 'custom',
-              label: 'Posts',
-              url: '/posts',
+              label: 'About',
+              url: '/about',
             },
           },
           {
             link: {
-              type: 'reference',
+              type: 'custom',
+              label: 'Services',
+              url: '/services',
+            },
+          },
+          {
+            link: {
+              type: 'custom',
+              label: 'Portfolio',
+              url: '/portfolio',
+            },
+          },
+          {
+            link: {
+              type: 'custom',
               label: 'Contact',
-              reference: {
-                relationTo: 'pages',
-                value: contactPage.id,
-              },
+              url: '/contact',
             },
           },
         ],
@@ -321,17 +354,8 @@ export const seed = async ({
           {
             link: {
               type: 'custom',
-              label: 'Source Code',
-              newTab: true,
-              url: 'https://github.com/payloadcms/payload/tree/main/templates/website',
-            },
-          },
-          {
-            link: {
-              type: 'custom',
-              label: 'Payload',
-              newTab: true,
-              url: 'https://payloadcms.com/',
+              label: 'Golden Bond',
+              url: '/',
             },
           },
         ],
@@ -339,7 +363,7 @@ export const seed = async ({
     }),
   ])
 
-  payload.logger.info('Seeded database successfully!')
+  payload.logger.info('Seeded Golden Bond database successfully!')
 }
 
 async function fetchFileByURL(url: string): Promise<File> {
