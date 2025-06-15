@@ -1,0 +1,1 @@
+export { PortfolioCategoryHeroBlock } from './Component'
