@@ -42,9 +42,18 @@ export const AdminBar: React.FC<{
   ) as keyof typeof collectionLabels
   const router = useRouter()
 
-  const onAuthChange = React.useCallback((user: PayloadMeUser) => {
-    setShow(Boolean(user?.id))
-  }, [])
+  const onAuthChange = React.useCallback(
+    (user: PayloadMeUser) => {
+      // Only show admin bar in preview mode, not for regular site visitors
+      setShow(Boolean(user?.id && adminBarProps?.preview))
+    },
+    [adminBarProps?.preview],
+  )
+
+  // Don't render anything if not in preview mode
+  if (!adminBarProps?.preview) {
+    return null
+  }
 
   return (
     <div

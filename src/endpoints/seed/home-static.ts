@@ -6,7 +6,7 @@ export const homeStatic: RequiredDataFromCollectionSlug<'pages'> = {
   _status: 'published',
   hero: {
     type: 'landingHero',
-    media: 1, // This will reference the hero image when uploaded
+    // No media property - this should show no background image
   },
   meta: {
     description:
@@ -24,7 +24,7 @@ export const homeStatic: RequiredDataFromCollectionSlug<'pages'> = {
           category: 'Private Events',
           title: 'Intimate Celebrations',
           description: 'Perfect for bachelorette parties, birthdays, and special gatherings',
-          image: 2, // Reference to services/private-events.jpg
+          image: 999, // Placeholder - won't resolve to actual media
           buttons: [
             {
               label: 'BOOK NOW',
@@ -42,7 +42,7 @@ export const homeStatic: RequiredDataFromCollectionSlug<'pages'> = {
           category: 'Business Events',
           title: 'Professional Gatherings',
           description: 'Ideal for corporate meetings, team building, and networking events.',
-          image: 3, // Reference to services/business-events.jpg
+          image: 998, // Placeholder - won't resolve to actual media
           buttons: [
             {
               label: 'BOOK NOW',
@@ -60,7 +60,7 @@ export const homeStatic: RequiredDataFromCollectionSlug<'pages'> = {
           category: 'Popup Events',
           title: 'Pop-Up Experiences',
           description: 'Unique temporary experiences and exclusive showcases.',
-          image: 4, // Reference to services/popup-events.jpg
+          image: 997, // Placeholder - won't resolve to actual media
           buttons: [
             {
               label: 'BOOK NOW',
@@ -86,15 +86,15 @@ export const homeStatic: RequiredDataFromCollectionSlug<'pages'> = {
       buttonLink: '/booking',
       images: [
         {
-          image: 5, // Reference to experience/experience1.png
+          image: 996, // Placeholder - won't resolve to actual media
           caption: 'Gems & Glamour: A Jewelry Showcase',
         },
         {
-          image: 6, // Reference to experience/experience2.png
+          image: 995, // Placeholder - won't resolve to actual media
           caption: 'Sparkle & Shine Jewelry Showcase',
         },
         {
-          image: 7, // Reference to experience/experience3.png
+          image: 994, // Placeholder - won't resolve to actual media
           caption: 'Magic & Mystery: A Jewelry Showcase',
         },
       ],

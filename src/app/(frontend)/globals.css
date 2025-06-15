@@ -118,10 +118,9 @@
     padding: 0;
   }
 
-  /* Ensure main content areas are white */
+  /* Ensure main content areas are white, but allow sections to override */
   article,
-  main,
-  section {
+  main {
     background-color: white;
   }
 
@@ -132,26 +131,44 @@
     padding: 0;
   }
 
-  /* Remove spacing between blocks */
-  article > * {
+  /* Remove spacing between blocks but allow Experience section padding */
+  article > *:not(section[class*='F4F1EB']) {
     margin: 0 !important;
     padding-bottom: 0 !important;
   }
 
-  /* Ensure footer connects directly to content */
+  /* Ensure footer connects properly */
   article + footer {
     margin-top: 0 !important;
   }
 
-  /* Force footer to be directly adjacent to last section */
+  /* Force footer to have no top margin */
   footer {
     margin-top: 0 !important;
   }
 
-  /* Specifically target Experience section to remove any bottom spacing */
+  /* Ensure Services section displays white background */
+  section[class*='min-h-[909px]'] {
+    background-color: #f4f1eb !important;
+  }
+
+  /* Ensure Experience section displays correct cream color */
   section[class*='F4F1EB'] {
-    margin-bottom: 0 !important;
-    padding-bottom: 0 !important;
+    background-color: #f4f1eb !important;
+  }
+
+  /* Ensure service card overlays display correctly */
+  div[class*='bg-[#1B0E01]/52'] {
+    background-color: rgba(27, 14, 1, 0.52) !important;
+  }
+
+  /* Force font loading and improve compatibility */
+  .tenor-font {
+    font-family: 'TenorSans', 'Arial', sans-serif !important;
+  }
+
+  .garamond-font {
+    font-family: 'Garamond', 'Georgia', serif !important;
   }
 }
 

@@ -1,6 +1,7 @@
 'use client'
 import { useHeaderTheme } from '@/providers/HeaderTheme'
 import React, { useEffect } from 'react'
+import Image from 'next/image'
 
 import type { Page } from '@/payload-types'
 
@@ -15,10 +16,19 @@ export const LandingHero: React.FC<Page['hero']> = ({ media }) => {
 
   return (
     <div className="relative min-h-screen overflow-hidden">
-      {/* Hero Image */}
+      {/* Hero Image or Default Golden Bond Image */}
       <div className="relative w-full h-screen">
-        {media && typeof media === 'object' && (
+        {media && typeof media === 'object' ? (
           <Media fill imgClassName="object-cover object-[50%_63%]" priority resource={media} />
+        ) : (
+          // Default Golden Bond hero image
+          <Image
+            src="/images/hero.jpg"
+            alt="Elegant woman wearing layered gold jewelry in luxury jewelry store"
+            fill
+            className="object-cover object-[50%_63%]"
+            priority
+          />
         )}
 
         {/* Dark overlay for better text readability */}

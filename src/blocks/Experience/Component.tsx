@@ -11,7 +11,7 @@ export const ExperienceBlock: React.FC<ExperienceBlockProps> = (props) => {
   // The CMS fields can be used later if needed for customization
 
   return (
-    <section className="w-full bg-[#F4F1EB] flex text-black px-4 sm:px-6 md:px-8 lg:px-[66px] pt-8 lg:pt-0 pb-8 lg:pb-12">
+    <section className="w-full min-h-screen bg-[#F4F1EB] flex text-black px-4 sm:px-6 md:px-8 lg:px-[66px] pt-8 lg:pt-0 pb-12 lg:pb-16">
       <div className="internal-container w-full max-w-7xl mx-auto flex flex-col lg:flex-row lg:mt-[60px] gap-8 lg:gap-0">
         {/* Text Content */}
         <div className="w-full lg:w-[40%] lg:h-full">
