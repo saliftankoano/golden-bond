@@ -176,9 +176,8 @@ html {
   opacity: 0;
 }
 
-html[data-theme='dark'],
-html[data-theme='light'] {
-  opacity: initial;
+html[data-theme] {
+  opacity: 1;
 }
 
 /* Animation Keyframes */
@@ -273,7 +272,6 @@ html[data-theme='light'] {
 }
 
 .animate-hero-scale-in {
-  animation: heroScaleIn 0.8s ease-out forwards;
-  animation-delay: 0.2s;
+  animation: heroScaleIn 0.6s ease-out forwards;
   opacity: 0;
 }
