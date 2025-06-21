@@ -126,12 +126,12 @@ export const TestimonialsBlock: React.FC<TestimonialsBlockProps> = ({
   }
 
   return (
-    <section className="w-full bg-[#1B0E01] flex flex-col lg:flex-row text-white py-8 md:py-12 lg:py-[5%] px-4 md:px-6 lg:px-[5%]">
+    <section className="w-full bg-[#1B0E01] flex flex-col lg:flex-row text-white py-8 md:py-12 lg:py-[5%] px-4 md:px-6 lg:px-[5%] animate-fade-in">
       {/* Images Section */}
       <div className="w-full lg:w-[40%] flex flex-col lg:flex-row items-center lg:items-end gap-4 lg:gap-[30px] mb-8 lg:mb-0">
         {/* Left Small Image - Hidden on mobile, visible on tablet+ */}
         <div
-          className="hidden sm:block w-[120px] sm:w-[130px] lg:w-[150px] h-[180px] sm:h-[190px] lg:h-[220px] relative cursor-pointer transition-transform duration-500 hover:scale-105"
+          className="hidden sm:block w-[120px] sm:w-[130px] lg:w-[150px] h-[180px] sm:h-[190px] lg:h-[220px] relative cursor-pointer transition-transform duration-500 hover:scale-105 animate-slide-left"
           onClick={() => handleImageClick('left-small')}
         >
           <Image
@@ -148,7 +148,7 @@ export const TestimonialsBlock: React.FC<TestimonialsBlockProps> = ({
         </div>
 
         {/* Main Large Image */}
-        <div className="w-[280px] sm:w-[320px] lg:w-[380px] h-[400px] sm:h-[460px] lg:h-[540px] relative">
+        <div className="w-[280px] sm:w-[320px] lg:w-[380px] h-[400px] sm:h-[460px] lg:h-[540px] relative animate-scale-in">
           <Image
             src={mainTestimonial?.image || ''}
             alt={mainTestimonial?.name || ''}
@@ -162,7 +162,7 @@ export const TestimonialsBlock: React.FC<TestimonialsBlockProps> = ({
       </div>
 
       {/* Content Section */}
-      <div className="w-full lg:w-[60%] lg:h-[540px] flex flex-col">
+      <div className="w-full lg:w-[60%] lg:h-[540px] flex flex-col animate-slide-up">
         {/* Text Content */}
         <div className="w-full flex-1 lg:h-[55%] lg:pl-[40px]">
           <div className="heading-container mb-6 lg:mb-0">
@@ -206,9 +206,10 @@ export const TestimonialsBlock: React.FC<TestimonialsBlockProps> = ({
               item.testimonial ? (
                 <div
                   key={item.testimonial.id}
-                  className={`w-[120px] sm:w-[130px] lg:w-[150px] h-[180px] sm:h-[190px] lg:h-[220px] relative cursor-pointer transition-transform duration-500 hover:scale-105 ${
+                  className={`w-[120px] sm:w-[130px] lg:w-[150px] h-[180px] sm:h-[190px] lg:h-[220px] relative cursor-pointer transition-transform duration-500 hover:scale-105 animate-slide-right ${
                     index >= 2 ? 'hidden sm:block' : ''
                   } ${index >= 3 ? 'hidden lg:block' : ''}`}
+                  style={{ animationDelay: `${0.1 + index * 0.1}s` }}
                   onClick={() => handleImageClick(item.position)}
                 >
                   <Image
@@ -230,8 +231,9 @@ export const TestimonialsBlock: React.FC<TestimonialsBlockProps> = ({
             alt="large ellipse"
             width={257}
             height={257}
-            className="hidden lg:block absolute top-[-50px] right-[2px] transform -translate-y-1/2 z-0"
-          />
+            className="hidden lg:block absolute top-[-50px] right-[2px] transform -translate-y-1/2 z-0 animate-fade-in"
+            style={{ animationDelay: '0.8s' }}
+                    />
         </div>
       </div>
     </section>

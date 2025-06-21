@@ -17,7 +17,7 @@ export const StoryTimeHeroBlock: React.FC<StoryTimeHeroBlockProps> = ({
   backgroundImage = '/images/story-time/story-time-hero.jpg',
 }) => {
   return (
-    <section className="relative w-full h-[500px] sm:h-[580px] md:h-[650px] lg:h-[750px] xl:h-[800px]">
+    <section className="relative w-full h-[500px] sm:h-[580px] md:h-[650px] lg:h-[750px] xl:h-[800px] animate-fade-in">
       <Image
         src={backgroundImage}
         alt="Story Time Hero"
@@ -26,7 +26,7 @@ export const StoryTimeHeroBlock: React.FC<StoryTimeHeroBlockProps> = ({
         sizes="100vw"
         priority
       />
-      <div className="hero-content absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-[320px] sm:max-w-[500px] md:max-w-[700px] lg:max-w-[850px] xl:max-w-[942px] px-4 sm:px-6 md:px-8 lg:px-4 xl:px-0 flex flex-col justify-center items-center">
+      <div className="hero-content absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-[320px] sm:max-w-[500px] md:max-w-[700px] lg:max-w-[850px] xl:max-w-[942px] px-4 sm:px-6 md:px-8 lg:px-4 xl:px-0 flex flex-col justify-center items-center animate-hero-scale-in">
         <h1 className="text-[28px] xs:text-[32px] sm:text-[42px] md:text-[52px] lg:text-[62px] xl:text-[70px] garamond-font leading-[110%] sm:leading-[115%] lg:leading-[120%] font-bold text-white uppercase text-center">
           {title}
         </h1>

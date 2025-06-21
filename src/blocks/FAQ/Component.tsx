@@ -70,7 +70,7 @@ export const FAQBlock: React.FC<FAQBlockProps> = ({
   return (
     <section className="w-full bg-[#F4F1EB] min-h-screen relative overflow-hidden py-12 md:py-16 lg:py-20">
       {/* Header Section */}
-      <div className="header flex flex-col items-center justify-center pt-8 md:pt-12 lg:pt-[15vh] relative px-4">
+      <div className="header flex flex-col items-center justify-center pt-8 md:pt-12 lg:pt-[15vh] relative px-4 animate-fade-in">
         <div className="header mb-2">
           <h2 className="text-center text-[#B58E5A] text-sm md:text-base lg:text-[16px] font-bold tenor-font uppercase tracking-wider">
             {sectionLabel}
@@ -88,7 +88,8 @@ export const FAQBlock: React.FC<FAQBlockProps> = ({
           alt="small ellipse"
           width={160}
           height={160}
-          className="absolute top-1/2 md:top-3/4 -translate-y-1/2 right-4 md:right-8 lg:right-16 w-[60px] h-[60px] sm:w-[80px] sm:h-[80px] md:w-[120px] md:h-[120px] lg:w-[160px] lg:h-[160px] z-10"
+          className="absolute top-1/2 md:top-3/4 -translate-y-1/2 right-4 md:right-8 lg:right-16 w-[60px] h-[60px] sm:w-[80px] sm:h-[80px] md:w-[120px] md:h-[120px] lg:w-[160px] lg:h-[160px] z-10 animate-fade-in"
+          style={{ animationDelay: '0.4s' }}
         />
       </div>
 
@@ -97,7 +98,7 @@ export const FAQBlock: React.FC<FAQBlockProps> = ({
         <div className="max-w-4xl lg:max-w-[800px] mx-auto">
           <div className="w-full space-y-2">
             {faqItems.map((item, index) => (
-              <div key={index} className="border-b border-gray-200">
+              <div key={index} className="border-b border-gray-200 animate-slide-up" style={{ animationDelay: `${0.1 + index * 0.05}s` }}>
                 <button
                   onClick={() => toggleItem(index)}
                   className="w-full text-left text-sm sm:text-base lg:text-lg font-medium text-[#1B0E01] hover:text-[#B58E5A] transition-colors py-4 md:py-6 flex justify-between items-center"
@@ -106,7 +107,7 @@ export const FAQBlock: React.FC<FAQBlockProps> = ({
                   <span className="ml-4 flex-shrink-0">{openItems[index] ? '−' : '+'}</span>
                 </button>
                 {openItems[index] && (
-                  <div className="text-sm sm:text-base text-gray-700 leading-relaxed pb-4 md:pb-6">
+                  <div className="text-sm sm:text-base text-gray-700 leading-relaxed pb-4 md:pb-6 animate-fade-in">
                     {item.answer}
                   </div>
                 )}
@@ -121,7 +122,8 @@ export const FAQBlock: React.FC<FAQBlockProps> = ({
           alt="large ellipse"
           width={257}
           height={257}
-          className="absolute bottom-[20px] sm:bottom-[40px] md:bottom-[60px] -left-[30px] sm:-left-[50px] md:-left-[80px] lg:-left-[120px] w-[80px] h-[80px] sm:w-[120px] sm:h-[120px] md:w-[180px] md:h-[180px] lg:w-[220px] lg:h-[220px] xl:w-[257px] xl:h-[257px] z-0"
+          className="absolute bottom-[20px] sm:bottom-[40px] md:bottom-[60px] -left-[30px] sm:-left-[50px] md:-left-[80px] lg:-left-[120px] w-[80px] h-[80px] sm:w-[120px] sm:h-[120px] md:w-[180px] md:h-[180px] lg:w-[220px] lg:h-[220px] xl:w-[257px] xl:h-[257px] z-0 animate-fade-in"
+          style={{ animationDelay: '0.6s' }}
         />
       </div>
     </section>

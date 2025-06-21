@@ -77,7 +77,7 @@ export const StoryTimeEventsBlock: React.FC<StoryTimeEventsBlockProps> = ({
 }) => {
   return (
     <section className="w-full min-h-screen flex flex-col relative px-4 sm:px-6 lg:px-8 xl:px-0 py-8 sm:py-12 md:py-16 lg:py-20 bg-[#F4F1EB]">
-      <div className="heading-container flex justify-center items-center">
+      <div className="heading-container flex justify-center items-center animate-fade-in">
         <div className="inner-heading w-full max-w-[320px] sm:max-w-[500px] md:max-w-[600px] lg:max-w-[674px] flex flex-col justify-center items-center text-center px-2 sm:px-4">
           <h2 className="text-[#B58E5A] text-[12px] sm:text-[14px] md:text-[15px] lg:text-[16px] leading-[120%] uppercase tenor-font">
             {heading.subtitle}
@@ -91,7 +91,7 @@ export const StoryTimeEventsBlock: React.FC<StoryTimeEventsBlockProps> = ({
       <div className="cards-container mt-[32px] sm:mt-[40px] md:mt-[50px] lg:mt-[60px] relative z-10">
         <div className="cards grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-[24px] sm:gap-y-[28px] md:gap-y-[32px] gap-x-[32px] sm:gap-x-[40px] md:gap-x-[50px] lg:gap-x-[60px] max-w-[350px] sm:max-w-[400px] md:max-w-[900px] lg:max-w-[1200px] xl:max-w-[1320px] mx-auto justify-items-center">
           {eventCards.map((card, index) => (
-            <Link key={index} href="/story-time/article" className="block">
+            <Link key={index} href="/story-time/article" className="block animate-slide-up" style={{ animationDelay: `${index * 0.1}s` }}>
               <div className="event-card w-full max-w-[320px] sm:max-w-[350px] md:max-w-[400px] lg:w-[380px] xl:w-[400px] h-[350px] sm:h-[380px] md:h-[400px] lg:h-[430px] xl:h-[453px] relative shadow-md hover:shadow-lg transition-shadow duration-300 cursor-pointer">
                 <Image
                   src={card.image}
@@ -129,7 +129,7 @@ export const StoryTimeEventsBlock: React.FC<StoryTimeEventsBlockProps> = ({
       </div>
 
       {/* View All Button */}
-      <div className="view-all-container flex justify-center mt-8 sm:mt-10 md:mt-12 lg:mt-14 xl:mt-16">
+      <div className="view-all-container flex justify-center mt-8 sm:mt-10 md:mt-12 lg:mt-14 xl:mt-16 animate-fade-in" style={{ animationDelay: '0.8s' }}>
         <Link href="/story-time/article">
           <button className="bg-[#B58E5A] hover:bg-[#B58E5A]/80 text-white font-semibold px-4 sm:px-5 md:px-6 lg:px-7 xl:px-8 py-2.5 sm:py-3 lg:py-3.5 xl:py-4 text-[13px] sm:text-[14px] lg:text-[15px] xl:text-[16px] leading-[18px] sm:leading-[19px] uppercase tenor-font transition-colors duration-300 rounded-sm hover:shadow-md">
             {viewAllButtonText}
@@ -140,7 +140,7 @@ export const StoryTimeEventsBlock: React.FC<StoryTimeEventsBlockProps> = ({
       {/* Decorative ellipses positioned behind cards - progressive visibility */}
       <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
         {/* Large ellipse on bottom left - hidden on mobile and small screens */}
-        <div className="hidden lg:block absolute bottom-[400px] xl:bottom-[550px] left-[15px] xl:left-[20px] z-0 opacity-60">
+        <div className="hidden lg:block absolute bottom-[400px] xl:bottom-[550px] left-[15px] xl:left-[20px] z-0 opacity-60 animate-fade-in" style={{ animationDelay: '1s' }}>
           <Image
             src="/images/large-ellipse.svg"
             alt="decorative ellipse"
@@ -150,7 +150,7 @@ export const StoryTimeEventsBlock: React.FC<StoryTimeEventsBlockProps> = ({
           />
         </div>
         {/* Small ellipse on upper right - hidden on mobile */}
-        <div className="hidden md:block absolute top-[40px] sm:top-[50px] lg:top-[60px] right-[20px] sm:right-[40px] md:right-[60px] lg:right-[80px] xl:right-[90px] z-0 opacity-70">
+        <div className="hidden md:block absolute top-[40px] sm:top-[50px] lg:top-[60px] right-[20px] sm:right-[40px] md:right-[60px] lg:right-[80px] xl:right-[90px] z-0 opacity-70 animate-fade-in" style={{ animationDelay: '1.2s' }}>
           <Image
             src="/images/small-ellipse.svg"
             alt="decorative ellipse"
@@ -160,7 +160,7 @@ export const StoryTimeEventsBlock: React.FC<StoryTimeEventsBlockProps> = ({
           />
         </div>
         {/* Additional small ellipse for larger screens */}
-        <div className="hidden xl:block absolute top-[300px] left-[60px] z-0 opacity-50">
+        <div className="hidden xl:block absolute top-[300px] left-[60px] z-0 opacity-50 animate-fade-in" style={{ animationDelay: '1.4s' }}>
           <Image
             src="/images/small-ellipse.svg"
             alt="decorative ellipse"
