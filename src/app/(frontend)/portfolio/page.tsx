@@ -4,14 +4,24 @@ import { PortfolioHeroBlock } from '@/blocks/PortfolioHero/Component'
 import { PortfolioEventTypesBlock } from '@/blocks/PortfolioEventTypes/Component'
 import { TestimonialsBlock } from '@/blocks/Testimonials/Component'
 import { FAQBlock } from '@/blocks/FAQ/Component'
+import { AnimatedSection } from '@/components/AnimatedSection'
 
 export default async function Portfolio() {
   return (
     <>
       <PortfolioHeroBlock />
-      <PortfolioEventTypesBlock />
-      <TestimonialsBlock />
-      <FAQBlock />
+
+      <AnimatedSection direction="up" delay={0.1}>
+        <PortfolioEventTypesBlock />
+      </AnimatedSection>
+
+      <AnimatedSection direction="left" delay={0.1}>
+        <TestimonialsBlock />
+      </AnimatedSection>
+
+      <AnimatedSection direction="up" delay={0.1}>
+        <FAQBlock />
+      </AnimatedSection>
     </>
   )
 }
