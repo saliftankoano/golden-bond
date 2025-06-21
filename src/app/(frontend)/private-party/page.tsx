@@ -3,6 +3,7 @@ import { PrivatePartyHero } from '@/blocks/PrivatePartyHero/Component'
 import { PrivatePartyFind } from '@/blocks/PrivatePartyFind/Component'
 import { PrivatePartyPastEvents } from '@/blocks/PrivatePartyPastEvents/Component'
 import { FAQBlock } from '@/blocks/FAQ/Component'
+import { AnimatedSection } from '@/components/AnimatedSection'
 
 export const metadata: Metadata = {
   title: 'Private Party Events - Golden Bond',
@@ -14,9 +15,18 @@ export default function PrivatePartyPage() {
   return (
     <>
       <PrivatePartyHero />
-      <PrivatePartyFind />
-      <PrivatePartyPastEvents />
-      <FAQBlock />
+
+      <AnimatedSection direction="left" delay={0.1}>
+        <PrivatePartyFind />
+      </AnimatedSection>
+
+      <AnimatedSection direction="right" delay={0.1}>
+        <PrivatePartyPastEvents />
+      </AnimatedSection>
+
+      <AnimatedSection direction="up" delay={0.1}>
+        <FAQBlock />
+      </AnimatedSection>
     </>
   )
 }
