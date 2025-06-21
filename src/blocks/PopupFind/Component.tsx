@@ -2,6 +2,7 @@
 
 import React from 'react'
 import Image from 'next/image'
+import { motion } from 'framer-motion'
 
 interface PopupFindProps {
   title?: string
@@ -20,13 +21,58 @@ export const PopupFind: React.FC<PopupFindProps> = ({
   buttonLink = '#',
   image = '/images/services/popup-events.jpg',
 }) => {
+  // Animation variants
+  const containerVariants = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.2,
+        delayChildren: 0.2,
+      },
+    },
+  } as any
+
+  const textVariants = {
+    hidden: { opacity: 0, x: -40 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: {
+        duration: 0.8,
+        ease: 'easeOut',
+      },
+    },
+  } as any
+
+  const imageVariants = {
+    hidden: { opacity: 0, x: 40, scale: 0.95 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      scale: 1,
+      transition: {
+        duration: 0.8,
+        ease: 'easeOut',
+      },
+    },
+  } as any
+
   return (
-    <section className="py-16 md:py-24 px-4 sm:px-6 lg:px-8 bg-white">
+    <motion.section
+      className="py-16 md:py-24 px-4 sm:px-6 lg:px-8 bg-white"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: '-100px' }}
+      variants={containerVariants}
+    >
       <div className="max-w-7xl mx-auto">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Text Content */}
-          <div className="space-y-6">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-800 garamond-font leading-tight">
+          <motion.div className="space-y-6" variants={textVariants}>
+            <motion.h2
+              className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-800 garamond-font leading-tight"
+              variants={textVariants}
+            >
               {title.split('Popup').map((part, index) => (
                 <span key={index}>
                   {part}
@@ -34,25 +80,36 @@ export const PopupFind: React.FC<PopupFindProps> = ({
                   {index === 0 && <br />}
                 </span>
               ))}
-            </h2>
-            <p className="text-lg text-gray-600 tenor-font leading-relaxed">{description1}</p>
-            <p className="text-lg text-gray-600 tenor-font leading-relaxed">{description2}</p>
-            <a
+            </motion.h2>
+            <motion.p
+              className="text-lg text-gray-600 tenor-font leading-relaxed"
+              variants={textVariants}
+            >
+              {description1}
+            </motion.p>
+            <motion.p
+              className="text-lg text-gray-600 tenor-font leading-relaxed"
+              variants={textVariants}
+            >
+              {description2}
+            </motion.p>
+            <motion.a
               href={buttonLink}
               className="inline-block bg-[#B58E5A] text-white px-8 py-4 text-lg font-light tracking-wide hover:bg-amber-700 transition-colors tenor-font"
+              variants={textVariants}
             >
               {buttonText}
-            </a>
-          </div>
+            </motion.a>
+          </motion.div>
 
           {/* Image */}
-          <div className="relative">
+          <motion.div className="relative" variants={imageVariants}>
             <div className="aspect-[4/3] relative rounded-lg overflow-hidden shadow-xl">
               <Image src={image} alt="Popup Events Setup" fill className="object-cover" />
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
-    </section>
+    </motion.section>
   )
 }
