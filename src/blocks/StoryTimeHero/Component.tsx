@@ -17,7 +17,7 @@ export const StoryTimeHeroBlock: React.FC<StoryTimeHeroBlockProps> = ({
   backgroundImage = '/images/story-time/story-time-hero.jpg',
 }) => {
   return (
-    <section className="relative w-full h-[500px] sm:h-[580px] md:h-[650px] lg:h-[750px] xl:h-[800px] animate-fade-in">
+    <section className="relative w-full h-[500px] sm:h-[580px] md:h-[650px] lg:h-[750px] xl:h-[800px]">
       <Image
         src={backgroundImage}
         alt="Story Time Hero"
