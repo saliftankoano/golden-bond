@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { EducationHero } from '@/blocks/EducationHero/Component'
+import { AnimatedSection } from '@/components/AnimatedSection'
 
 export const metadata: Metadata = {
   title: 'Education - Golden Bond',

@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react'
 import Image from 'next/image'
+import { motion } from 'framer-motion'
 
 interface FormData {
   fullName: string
@@ -69,6 +70,67 @@ export const EducationHero: React.FC = () => {
     setOverlayStep('success')
     // TODO: Handle form submission (API call, etc.)
   }
+
+  // Animation variants
+  const containerVariants = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.2,
+        delayChildren: 0.3,
+      },
+    },
+  } as any
+
+  const headingVariants = {
+    hidden: { opacity: 0, y: 50, scale: 0.95 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: {
+        duration: 1,
+        ease: 'easeOut',
+      },
+    },
+  } as any
+
+  const subtitleVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.8,
+        ease: 'easeOut',
+      },
+    },
+  } as any
+
+  const buttonVariants = {
+    hidden: { opacity: 0, y: 20, scale: 0.95 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: {
+        duration: 0.6,
+        ease: 'easeOut',
+      },
+    },
+  } as any
+
+  const backgroundVariants = {
+    hidden: { opacity: 0, scale: 1.05 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: {
+        duration: 1.2,
+        ease: 'easeOut',
+      },
+    },
+  } as any
 
   const renderWaitlistOverlay = () => (
     <div className="absolute inset-0 z-50">
@@ -638,40 +700,54 @@ export const EducationHero: React.FC = () => {
 
   return (
     <>
-      <section className="w-full h-screen relative">
-        <Image
-          src="/images/education/education.webp"
-          alt="Hero"
-          fill
-          className="object-cover object-bottom filter brightness-50"
-        />
+      <motion.section
+        className="w-full h-screen relative"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: '-100px' }}
+        variants={containerVariants}
+      >
+        <motion.div variants={backgroundVariants}>
+          <Image
+            src="/images/education/education.webp"
+            alt="Hero"
+            fill
+            className="object-cover object-bottom filter brightness-50"
+          />
+        </motion.div>
         <div className="w-full max-w-[320px] sm:max-w-[480px] md:max-w-[640px] lg:max-w-[768px] xl:max-w-[899px] h-auto mx-auto absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 px-4 sm:px-6 md:px-8">
-          <div className="heading">
+          <motion.div className="heading" variants={headingVariants}>
             <h1 className="uppercase garamond-font text-center text-[28px] sm:text-[36px] md:text-[48px] lg:text-[60px] xl:text-[75px] leading-[120%] text-white">
               BECOME A TRUE PERMANENT JEWELRY PRO
             </h1>
-          </div>
-          <div className="mt-[16px] sm:mt-[20px] md:mt-[24px] mx-auto w-full max-w-[280px] sm:max-w-[400px] md:max-w-[500px] lg:max-w-[580px] xl:max-w-[641px]">
+          </motion.div>
+          <motion.div
+            className="mt-[16px] sm:mt-[20px] md:mt-[24px] mx-auto w-full max-w-[280px] sm:max-w-[400px] md:max-w-[500px] lg:max-w-[580px] xl:max-w-[641px]"
+            variants={subtitleVariants}
+          >
             <p className="tenor-font text-[14px] sm:text-[15px] md:text-[16px] lg:text-[17px] xl:text-[18px] leading-[120%] text-white text-center">
               Learn from industry experts with hands-on training, professional coaching, and the
               best tools in the business
             </p>
-          </div>
-          <div className="btn-container flex justify-center mt-[24px] sm:mt-[32px] md:mt-[40px] lg:mt-[44px] xl:mt-[48px]">
+          </motion.div>
+          <motion.div
+            className="btn-container flex justify-center mt-[24px] sm:mt-[32px] md:mt-[40px] lg:mt-[44px] xl:mt-[48px]"
+            variants={buttonVariants}
+          >
             <button
               onClick={openWaitlistOverlay}
               className="uppercase w-full sm:w-auto min-w-[200px] sm:min-w-[220px] md:min-w-[240px] lg:min-w-[260px] xl:min-w-[211px] h-[45px] sm:h-[48px] md:h-[52px] lg:h-[58px] xl:h-[61px] bg-[#B58E5A] text-white text-[14px] sm:text-[15px] md:text-base lg:text-lg xl:text-[19px] font-semibold tenor-font hover:bg-[#B58E5A]/90 hover:scale-95 hover:cursor-pointer transition-all duration-300 ease-in-out transform whitespace-nowrap px-4 sm:px-6"
             >
               Join the waitlist
             </button>
-          </div>
+          </motion.div>
         </div>
 
         {isOverlayOpen && overlayStep === 'waitlist' && renderWaitlistOverlay()}
         {isOverlayOpen && overlayStep === 'question' && renderQuestionOverlay()}
         {isOverlayOpen && overlayStep === 'dataform' && renderDataFormOverlay()}
         {isOverlayOpen && overlayStep === 'success' && renderSuccessOverlay()}
-      </section>
+      </motion.section>
 
       <style jsx>{`
         @keyframes fade-in {
