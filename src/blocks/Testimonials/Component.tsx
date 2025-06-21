@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react'
 import Image from 'next/image'
+import { motion } from 'framer-motion'
 
 interface Testimonial {
   id: number
@@ -125,14 +126,73 @@ export const TestimonialsBlock: React.FC<TestimonialsBlockProps> = ({
     setTimeout(() => setIsTransitioning(false), 500)
   }
 
+  // Animation variants
+  const containerVariants = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.2,
+        delayChildren: 0.1,
+      },
+    },
+  } as any
+
+  const imageVariants = {
+    hidden: { opacity: 0, scale: 0.9, y: 40 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      y: 0,
+      transition: {
+        duration: 0.8,
+        ease: 'easeOut',
+      },
+    },
+  } as any
+
+  const contentVariants = {
+    hidden: { opacity: 0, x: -40 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: {
+        duration: 0.8,
+        ease: 'easeOut',
+      },
+    },
+  } as any
+
+  const smallImageVariants = {
+    hidden: { opacity: 0, scale: 0.8, y: 30 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: 'easeOut',
+      },
+    },
+  } as any
+
   return (
-    <section className="w-full bg-[#1B0E01] flex flex-col lg:flex-row text-white py-8 md:py-12 lg:py-[5%] px-4 md:px-6 lg:px-[5%]">
+    <motion.section
+      className="w-full bg-[#1B0E01] flex flex-col lg:flex-row text-white py-8 md:py-12 lg:py-[5%] px-4 md:px-6 lg:px-[5%]"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: '-100px' }}
+      variants={containerVariants}
+    >
       {/* Images Section */}
-      <div className="w-full lg:w-[40%] flex flex-col lg:flex-row items-center lg:items-end gap-4 lg:gap-[30px] mb-8 lg:mb-0">
+      <motion.div
+        className="w-full lg:w-[40%] flex flex-col lg:flex-row items-center lg:items-end gap-4 lg:gap-[30px] mb-8 lg:mb-0"
+        variants={imageVariants}
+      >
         {/* Left Small Image - Hidden on mobile, visible on tablet+ */}
-        <div
+        <motion.div
           className="hidden sm:block w-[120px] sm:w-[130px] lg:w-[150px] h-[180px] sm:h-[190px] lg:h-[220px] relative cursor-pointer transition-transform duration-500 hover:scale-105"
           onClick={() => handleImageClick('left-small')}
+          variants={smallImageVariants}
         >
           <Image
             src={
@@ -145,10 +205,13 @@ export const TestimonialsBlock: React.FC<TestimonialsBlockProps> = ({
             }`}
             sizes="(max-width: 640px) 120px, (max-width: 1024px) 130px, 150px"
           />
-        </div>
+        </motion.div>
 
         {/* Main Large Image */}
-        <div className="w-[280px] sm:w-[320px] lg:w-[380px] h-[400px] sm:h-[460px] lg:h-[540px] relative">
+        <motion.div
+          className="w-[280px] sm:w-[320px] lg:w-[380px] h-[400px] sm:h-[460px] lg:h-[540px] relative"
+          variants={imageVariants}
+        >
           <Image
             src={mainTestimonial?.image || ''}
             alt={mainTestimonial?.name || ''}
@@ -158,14 +221,17 @@ export const TestimonialsBlock: React.FC<TestimonialsBlockProps> = ({
             }`}
             sizes="(max-width: 640px) 280px, (max-width: 1024px) 320px, 380px"
           />
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
 
       {/* Content Section */}
-      <div className="w-full lg:w-[60%] lg:h-[540px] flex flex-col">
+      <motion.div
+        className="w-full lg:w-[60%] lg:h-[540px] flex flex-col"
+        variants={contentVariants}
+      >
         {/* Text Content */}
         <div className="w-full flex-1 lg:h-[55%] lg:pl-[40px]">
-          <div className="heading-container mb-6 lg:mb-0">
+          <motion.div className="heading-container mb-6 lg:mb-0" variants={contentVariants}>
             <h2 className="tenor-font text-base lg:text-[20px] font-semibold text-[#B58E5A] leading-tight mb-3 lg:mb-[12px] uppercase">
               {sectionLabel}
             </h2>
@@ -176,8 +242,11 @@ export const TestimonialsBlock: React.FC<TestimonialsBlockProps> = ({
             >
               {mainTestimonial?.title || ''}
             </h1>
-          </div>
-          <div className="max-w-full lg:max-w-[510px] mb-6 lg:mb-[5%]">
+          </motion.div>
+          <motion.div
+            className="max-w-full lg:max-w-[510px] mb-6 lg:mb-[5%]"
+            variants={contentVariants}
+          >
             <p
               className={`text-sm sm:text-base lg:text-[16px] tenor-font leading-relaxed transition-all duration-500 ${
                 isTransitioning ? 'opacity-0 translate-y-2' : 'opacity-100 translate-y-0'
@@ -192,24 +261,31 @@ export const TestimonialsBlock: React.FC<TestimonialsBlockProps> = ({
             >
               - {mainTestimonial?.name || ''}
             </p>
-          </div>
-          <button className="w-full sm:w-auto max-w-[211px] h-[55px] py-[2.5%] px-[10%] bg-transparent border border-[#B58E5A] text-sm sm:text-base lg:text-[16px] text-[#B58E5A] flex items-center justify-center uppercase hover:cursor-pointer hover:bg-[#B58E5A] hover:text-white transition-all duration-300">
+          </motion.div>
+          <motion.button
+            className="w-full sm:w-auto max-w-[211px] h-[55px] py-[2.5%] px-[10%] bg-transparent border border-[#B58E5A] text-sm sm:text-base lg:text-[16px] text-[#B58E5A] flex items-center justify-center uppercase hover:cursor-pointer hover:bg-[#B58E5A] hover:text-white transition-all duration-300"
+            variants={contentVariants}
+          >
             <p>Explore</p>
-          </button>
+          </motion.button>
         </div>
 
         {/* Bottom Images Gallery */}
-        <div className="w-full lg:h-[45%] flex flex-wrap sm:flex-nowrap gap-3 sm:gap-4 lg:gap-[30px] lg:pl-[40px] relative items-end mt-8 lg:mt-0 justify-center lg:justify-start">
+        <motion.div
+          className="w-full lg:h-[45%] flex flex-wrap sm:flex-nowrap gap-3 sm:gap-4 lg:gap-[30px] lg:pl-[40px] relative items-end mt-8 lg:mt-0 justify-center lg:justify-start"
+          variants={containerVariants}
+        >
           {arrangement
             .filter((item) => item.position.startsWith('right-'))
             .map((item, index) =>
               item.testimonial ? (
-                <div
+                <motion.div
                   key={item.testimonial.id}
                   className={`w-[120px] sm:w-[130px] lg:w-[150px] h-[180px] sm:h-[190px] lg:h-[220px] relative cursor-pointer transition-transform duration-500 hover:scale-105 ${
                     index >= 2 ? 'hidden sm:block' : ''
                   } ${index >= 3 ? 'hidden lg:block' : ''}`}
                   onClick={() => handleImageClick(item.position)}
+                  variants={smallImageVariants}
                 >
                   <Image
                     src={item.testimonial.image}
@@ -220,7 +296,7 @@ export const TestimonialsBlock: React.FC<TestimonialsBlockProps> = ({
                     } ${index === 3 ? 'z-20' : 'z-10'}`}
                     sizes="(max-width: 640px) 120px, (max-width: 1024px) 130px, 150px"
                   />
-                </div>
+                </motion.div>
               ) : null,
             )}
 
@@ -232,8 +308,8 @@ export const TestimonialsBlock: React.FC<TestimonialsBlockProps> = ({
             height={257}
             className="hidden lg:block absolute top-[-50px] right-[2px] transform -translate-y-1/2 z-0"
           />
-        </div>
-      </div>
-    </section>
+        </motion.div>
+      </motion.div>
+    </motion.section>
   )
 }

@@ -2,6 +2,7 @@
 
 import React from 'react'
 import Image from 'next/image'
+import { motion } from 'framer-motion'
 
 // Define types for FAQ items
 interface FAQItem {
@@ -67,10 +68,67 @@ export const FAQBlock: React.FC<FAQBlockProps> = ({
     }))
   }
 
+  // Animation variants
+  const containerVariants = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2,
+      },
+    },
+  } as any
+
+  const headerVariants = {
+    hidden: { opacity: 0, y: 40 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.8,
+        ease: 'easeOut',
+      },
+    },
+  } as any
+
+  const faqItemVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: 'easeOut',
+      },
+    },
+  } as any
+
+  const decorativeVariants = {
+    hidden: { opacity: 0, scale: 0.8 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: {
+        duration: 1.2,
+        ease: 'easeOut',
+        delay: 0.8,
+      },
+    },
+  } as any
+
   return (
-    <section className="w-full bg-[#F4F1EB] min-h-screen relative overflow-hidden py-12 md:py-16 lg:py-20">
+    <motion.section
+      className="w-full bg-[#F4F1EB] min-h-screen relative overflow-hidden py-12 md:py-16 lg:py-20"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: '-100px' }}
+      variants={containerVariants}
+    >
       {/* Header Section */}
-      <div className="header flex flex-col items-center justify-center pt-8 md:pt-12 lg:pt-[15vh] relative px-4">
+      <motion.div
+        className="header flex flex-col items-center justify-center pt-8 md:pt-12 lg:pt-[15vh] relative px-4"
+        variants={headerVariants}
+      >
         <div className="header mb-2">
           <h2 className="text-center text-[#B58E5A] text-sm md:text-base lg:text-[16px] font-bold tenor-font uppercase tracking-wider">
             {sectionLabel}
@@ -83,21 +141,27 @@ export const FAQBlock: React.FC<FAQBlockProps> = ({
         </div>
 
         {/* Decorative ellipse - top right */}
-        <Image
-          src="/images/small-ellipse.svg"
-          alt="small ellipse"
-          width={160}
-          height={160}
-          className="absolute top-1/2 md:top-3/4 -translate-y-1/2 right-4 md:right-8 lg:right-16 w-[60px] h-[60px] sm:w-[80px] sm:h-[80px] md:w-[120px] md:h-[120px] lg:w-[160px] lg:h-[160px] z-10"
-        />
-      </div>
+        <motion.div variants={decorativeVariants}>
+          <Image
+            src="/images/small-ellipse.svg"
+            alt="small ellipse"
+            width={160}
+            height={160}
+            className="absolute top-1/2 md:top-3/4 -translate-y-1/2 right-4 md:right-8 lg:right-16 w-[60px] h-[60px] sm:w-[80px] sm:h-[80px] md:w-[120px] md:h-[120px] lg:w-[160px] lg:h-[160px] z-10"
+          />
+        </motion.div>
+      </motion.div>
 
       {/* FAQ Content */}
       <div className="faq-container max-w-6xl lg:max-w-[1180px] mx-auto px-4 sm:px-6 md:px-8 lg:px-16 xl:px-[190px] pb-12 md:pb-16 lg:pb-20 pt-8 md:pt-12 lg:pt-[5vh] relative">
         <div className="max-w-4xl lg:max-w-[800px] mx-auto">
-          <div className="w-full space-y-2">
+          <motion.div className="w-full space-y-2" variants={containerVariants}>
             {faqItems.map((item, index) => (
-              <div key={index} className="border-b border-gray-200">
+              <motion.div
+                key={index}
+                className="border-b border-gray-200"
+                variants={faqItemVariants}
+              >
                 <button
                   onClick={() => toggleItem(index)}
                   className="w-full text-left text-sm sm:text-base lg:text-lg font-medium text-[#1B0E01] hover:text-[#B58E5A] transition-colors py-4 md:py-6 flex justify-between items-center"
@@ -106,24 +170,32 @@ export const FAQBlock: React.FC<FAQBlockProps> = ({
                   <span className="ml-4 flex-shrink-0">{openItems[index] ? '−' : '+'}</span>
                 </button>
                 {openItems[index] && (
-                  <div className="text-sm sm:text-base text-gray-700 leading-relaxed pb-4 md:pb-6">
+                  <motion.div
+                    className="text-sm sm:text-base text-gray-700 leading-relaxed pb-4 md:pb-6"
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: 'auto' }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ duration: 0.3, ease: 'easeOut' }}
+                  >
                     {item.answer}
-                  </div>
+                  </motion.div>
                 )}
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
 
         {/* Decorative ellipse - bottom left */}
-        <Image
-          src="/images/large-ellipse.svg"
-          alt="large ellipse"
-          width={257}
-          height={257}
-          className="absolute bottom-[20px] sm:bottom-[40px] md:bottom-[60px] -left-[30px] sm:-left-[50px] md:-left-[80px] lg:-left-[120px] w-[80px] h-[80px] sm:w-[120px] sm:h-[120px] md:w-[180px] md:h-[180px] lg:w-[220px] lg:h-[220px] xl:w-[257px] xl:h-[257px] z-0"
-        />
+        <motion.div variants={decorativeVariants}>
+          <Image
+            src="/images/large-ellipse.svg"
+            alt="large ellipse"
+            width={257}
+            height={257}
+            className="absolute bottom-[20px] sm:bottom-[40px] md:bottom-[60px] -left-[30px] sm:-left-[50px] md:-left-[80px] lg:-left-[120px] w-[80px] h-[80px] sm:w-[120px] sm:h-[120px] md:w-[180px] md:h-[180px] lg:w-[220px] lg:h-[220px] xl:w-[257px] xl:h-[257px] z-0"
+          />
+        </motion.div>
       </div>
-    </section>
+    </motion.section>
   )
 }
