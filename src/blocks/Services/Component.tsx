@@ -4,16 +4,60 @@ import { cn } from '@/utilities/ui'
 import React from 'react'
 import { ArrowRight } from 'lucide-react'
 import Image from 'next/image'
+import { motion } from 'framer-motion'
 
 import type { ServicesBlock as ServicesBlockProps } from '@/payload-types'
 
 export const ServicesBlock: React.FC<ServicesBlockProps> = (props) => {
-  // Use the original golden design with static content
-  // CMS fields can be used later if needed for customization
+  // Animation variants for staggered card entrance
+  const containerVariants = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.2,
+        delayChildren: 0.1,
+      },
+    },
+  } as any
+
+  const cardVariants = {
+    hidden: {
+      opacity: 0,
+      y: 60,
+      scale: 0.95,
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: {
+        duration: 0.8,
+        ease: [0.25, 0.25, 0.25, 0.75],
+      },
+    },
+  } as any
+
+  const headingVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: 'easeOut',
+      },
+    },
+  } as any
 
   return (
     <section className="w-full min-h-[909px] lg:h-[909px] flex flex-col relative px-6 lg:px-0">
-      <div className="heading-container flex justify-center items-center pt-[40px] lg:pt-[60px]">
+      <motion.div
+        className="heading-container flex justify-center items-center pt-[40px] lg:pt-[60px]"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: '-50px' }}
+        variants={headingVariants}
+      >
         <div className="inner-heading w-full max-w-[674px] flex flex-col justify-center items-center text-center px-4">
           <h2 className="text-[#B58E5A] text-[14px] sm:text-[16px] leading-[120%] uppercase tenor-font">
             CHOOSE YOUR EXPERIENCE
@@ -22,10 +66,19 @@ export const ServicesBlock: React.FC<ServicesBlockProps> = (props) => {
             Tailored Events for Every Occasion
           </h1>
         </div>
-      </div>
+      </motion.div>
 
-      <div className="cards flex flex-col lg:flex-row justify-center items-center mt-[40px] lg:mt-[60px] relative z-10 gap-8 lg:gap-0 pb-12 lg:pb-0">
-        <div className="private-events-card w-full max-w-[350px] lg:w-[400px] h-[400px] lg:h-[453px] relative shadow-lg">
+      <motion.div
+        className="cards flex flex-col lg:flex-row justify-center items-center mt-[40px] lg:mt-[60px] relative z-10 gap-8 lg:gap-0 pb-12 lg:pb-0"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: '-100px' }}
+        variants={containerVariants}
+      >
+        <motion.div
+          className="private-events-card w-full max-w-[350px] lg:w-[400px] h-[400px] lg:h-[453px] relative shadow-lg"
+          variants={cardVariants}
+        >
           <Image
             src="/images/services/private-events.jpg"
             alt="Private Events"
@@ -58,8 +111,11 @@ export const ServicesBlock: React.FC<ServicesBlockProps> = (props) => {
               </button>
             </div>
           </div>
-        </div>
-        <div className="business-events-card w-full max-w-[350px] lg:w-[400px] h-[400px] lg:h-[453px] relative shadow-lg lg:mx-[60px]">
+        </motion.div>
+        <motion.div
+          className="business-events-card w-full max-w-[350px] lg:w-[400px] h-[400px] lg:h-[453px] relative shadow-lg lg:mx-[60px]"
+          variants={cardVariants}
+        >
           <Image
             src="/images/services/business-events.jpg"
             alt="Business Events"
@@ -92,8 +148,11 @@ export const ServicesBlock: React.FC<ServicesBlockProps> = (props) => {
               </button>
             </div>
           </div>
-        </div>
-        <div className="popup-events-card w-full max-w-[350px] lg:w-[400px] h-[400px] lg:h-[453px] relative shadow-lg">
+        </motion.div>
+        <motion.div
+          className="popup-events-card w-full max-w-[350px] lg:w-[400px] h-[400px] lg:h-[453px] relative shadow-lg"
+          variants={cardVariants}
+        >
           <Image
             src="/images/services/popup-events.jpg"
             alt="Private Events"
@@ -126,8 +185,8 @@ export const ServicesBlock: React.FC<ServicesBlockProps> = (props) => {
               </button>
             </div>
           </div>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
 
       {/* Decorative ellipses positioned behind cards - hidden on mobile */}
       <div className="absolute top-0 left-0 w-full h-full pointer-events-none hidden lg:block">
