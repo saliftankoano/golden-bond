@@ -70,7 +70,7 @@ export const ServicesBlock: React.FC<ServicesBlockProps> = (props) => {
           <div className="absolute inset-0 bg-[#1B0E01]/52"></div>
           <div className="card-content absolute inset-0 p-4 lg:p-6 flex flex-col justify-end z-10">
             <div className="card-content-inner mb-3 lg:mb-4">
-              <h3 className="text-[#B58E5A] tenor-font font-semibold text-[12px] lg:text-[14px] leading-[20px] mb-2 tracking-[0.25px] uppercase">
+              <h3 className="text-[#B58E5A] tenor-font font-semibold text-[12px] lg:text-[8px] leading-[20px] mb-2 tracking-[0.25px] uppercase">
                 Business Events
               </h3>
               <h2 className="text-white garamond-font font-semibold text-[20px] lg:text-[24px] leading-[120%] mb-2">
